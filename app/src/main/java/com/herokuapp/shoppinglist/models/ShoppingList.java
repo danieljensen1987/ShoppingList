@@ -1,16 +1,19 @@
 package com.herokuapp.shoppinglist.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ShoppingList {
+public class ShoppingList implements Serializable{
+    public String _id;
     public String author;
     public String listName;
     public List<String> subscribers;
     public HashMap<String,Boolean> items;
 
-    public ShoppingList(String author, String listName){
+    public ShoppingList(String _id, String author, String listName){
+        this._id = _id;
         this.author = author;
         this.listName = listName;
         this.subscribers = new ArrayList<>();

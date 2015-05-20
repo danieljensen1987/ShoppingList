@@ -189,9 +189,10 @@ public class ServerRequests {
                 for (int i = 0; i < arr.length(); i++){
 
                     JSONObject obj = (JSONObject) arr.get(i);
+                    String _id = obj.getString("_id");
                     String author = obj.getString("author");
                     String listName = obj.getString("listName");
-                    ShoppingList l = new ShoppingList(author, listName);
+                    ShoppingList l = new ShoppingList(_id, author, listName);
 
                     String subs = obj.getString("subscribers");
                     JSONArray subArr = new JSONArray(subs);

@@ -6,30 +6,26 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.herokuapp.shoppinglist.R;
 import com.herokuapp.shoppinglist.fragments.FragmentNavigationDrawer;
 import com.herokuapp.shoppinglist.fragments.HomeFragment;
 import com.herokuapp.shoppinglist.fragments.ListsFragment;
 import com.herokuapp.shoppinglist.fragments.SettingsFragment;
-import com.herokuapp.shoppinglist.preferences.UserLocalStore;
+import com.herokuapp.shoppinglist.preferences.Preferences;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity{
     private FragmentNavigationDrawer dlDrawer;
-    UserLocalStore userLocalStore;
+    Preferences userLocalStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        userLocalStore = new UserLocalStore(this);
+        userLocalStore = new Preferences(this);
 
         // Set a Toolbar to replace the ActionBar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,14 +13,14 @@ import com.herokuapp.shoppinglist.R;
 import com.herokuapp.shoppinglist.database.ServerRequests;
 import com.herokuapp.shoppinglist.interfaces.GetUserCallback;
 import com.herokuapp.shoppinglist.models.Credentials;
-import com.herokuapp.shoppinglist.preferences.UserLocalStore;
+import com.herokuapp.shoppinglist.preferences.Preferences;
 
 public class LoginActivity extends ActionBarActivity implements View.OnClickListener {
     Button btnLogin;
     TextView registerLink;
     EditText etEmail, etPassword;
 
-    UserLocalStore userLocalStore;
+    Preferences userLocalStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +35,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         btnLogin.setOnClickListener(this);
         registerLink.setOnClickListener(this);
 
-        userLocalStore = new UserLocalStore(this);
+        userLocalStore = new Preferences(this);
     }
 
     @Override
