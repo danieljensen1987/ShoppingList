@@ -12,12 +12,20 @@ public class ShoppingList implements Serializable{
     public List<String> subscribers;
     public HashMap<String,Boolean> items;
 
+    public String get_id() {
+        return _id;
+    }
+
     public ShoppingList(String _id, String author, String listName){
         this._id = _id;
         this.author = author;
         this.listName = listName;
         this.subscribers = new ArrayList<>();
         this.items = new HashMap<>();
+    }
+
+    public String getListName() {
+        return listName;
     }
 
     public void changeListName(String listName){
@@ -44,6 +52,10 @@ public class ShoppingList implements Serializable{
 
     public void removeItem(String item){
         items.remove(item);
+    }
+
+    public Boolean isCheked(String item){
+        return items.get(item);
     }
 
     public void checked (String item){

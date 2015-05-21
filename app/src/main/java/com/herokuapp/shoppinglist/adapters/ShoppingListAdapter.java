@@ -11,27 +11,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.herokuapp.shoppinglist.R;
-import com.herokuapp.shoppinglist.models.ShoppingListItem;
+import com.herokuapp.shoppinglist.models.ShoppingList;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ShoppingListAdapter extends BaseAdapter{
     private Context context;
-    private ArrayList<ShoppingListItem> shoppingListItems;
+    private List<ShoppingList> shoppingLists;
+    private int mViewIcon;
+    private int mDeleteIcon;
 
-    public ShoppingListAdapter(Context context, ArrayList<ShoppingListItem> shoppingListItems){
+    public ShoppingListAdapter(Context context, List<ShoppingList> shoppingLists, int mViewIcon, int mDeleteIcon){
         this.context = context;
-        this.shoppingListItems = shoppingListItems;
+        this.shoppingLists = shoppingLists;
+        this.mViewIcon = mViewIcon;
+        this.mDeleteIcon = mDeleteIcon;
     }
 
     @Override
     public int getCount() {
-        return shoppingListItems.size();
+        return shoppingLists.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return shoppingListItems.get(position);
+        return shoppingLists.get(position);
     }
 
     @Override
@@ -52,9 +56,9 @@ public class ShoppingListAdapter extends BaseAdapter{
         imView.setFocusable(false);
         imDelete.setFocusable(false);
 
-        tvTitle.setText(shoppingListItems.get(position).getmTitle());
-        imView.setImageResource(shoppingListItems.get(position).getmViewIcon());
-        imDelete.setImageResource(shoppingListItems.get(position).getmDeleteIcon());
+        tvTitle.setText(shoppingLists.get(position).getListName());
+        imView.setImageResource(mViewIcon);
+        imDelete.setImageResource(mDeleteIcon);
 
         imView.setOnClickListener(new View.OnClickListener() {
             @Override

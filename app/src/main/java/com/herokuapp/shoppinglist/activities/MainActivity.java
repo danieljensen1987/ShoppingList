@@ -16,6 +16,8 @@ import com.herokuapp.shoppinglist.fragments.ListsFragment;
 import com.herokuapp.shoppinglist.fragments.SettingsFragment;
 import com.herokuapp.shoppinglist.preferences.Preferences;
 
+import java.util.ArrayList;
+
 public class MainActivity extends ActionBarActivity{
     private FragmentNavigationDrawer dlDrawer;
     Preferences userLocalStore;
@@ -38,7 +40,7 @@ public class MainActivity extends ActionBarActivity{
                 R.layout.drawer_nav_item, R.id.flContent);
         // Add nav items
         dlDrawer.addNavItem("Home",R.drawable.home,"Home", HomeFragment.class);
-        dlDrawer.addNavItem("Lists",R.drawable.list, "Lists", ListsFragment.class);
+        dlDrawer.addNavItem("Shopping Lists",R.drawable.list, "Shopping Lists", ListsFragment.class);
         dlDrawer.addNavItem("Settings",R.drawable.settings, "Settings", SettingsFragment.class);
         // Select default "Home"
         if (savedInstanceState == null) {
@@ -49,7 +51,6 @@ public class MainActivity extends ActionBarActivity{
     @Override
     protected void onStart() {
         super.onStart();
-        Boolean test = true;
         if(!userLocalStore.isLoggedIn()){
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();

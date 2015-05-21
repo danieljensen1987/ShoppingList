@@ -35,4 +35,5 @@
         android:dividerHeight="1dp"
         android:background="@android:color/background_light" />
 
+
 </com.herokuapp.shoppinglist.fragments.FragmentNavigationDrawer>

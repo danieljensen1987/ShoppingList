@@ -4,6 +4,6 @@ import com.herokuapp.shoppinglist.models.ShoppingList;
 
 import java.util.List;
 
-public interface ListCallback {
+public interface GetAllMyListsCallback {
     void done(List<ShoppingList> lists);
 }

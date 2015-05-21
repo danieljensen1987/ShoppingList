@@ -3,10 +3,25 @@
     android:layout_height="match_parent"
     tools:context="com.herokuapp.shoppinglist.fragments.ListDetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/details"
-        android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="525dp"
+        android:descendantFocusability="blocksDescendants">
+    </ListView>
+
+    <TextView android:id="@id/android:empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="No items found!"
+        android:textSize="20dp"
+        android:textAlignment="center"/>
+
+    <Button
+        android:id="@+id/btn_updateList"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Update"
+        android:layout_gravity="center_horizontal|bottom" />
 
 </FrameLayout>

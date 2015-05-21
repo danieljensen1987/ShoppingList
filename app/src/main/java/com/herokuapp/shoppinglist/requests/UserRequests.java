@@ -1,4 +1,4 @@
-package com.herokuapp.shoppinglist.database;
+package com.herokuapp.shoppinglist.requests;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.util.Log;
 //import com.google.gson.JsonArray;
 //import com.google.gson.JsonParser;
 import com.herokuapp.shoppinglist.interfaces.GetUserCallback;
-import com.herokuapp.shoppinglist.interfaces.ListCallback;
+import com.herokuapp.shoppinglist.interfaces.GetAllMyListsCallback;
 import com.herokuapp.shoppinglist.models.Credentials;
 import com.herokuapp.shoppinglist.models.ShoppingList;
 
@@ -31,13 +31,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerRequests {
+public class UserRequests {
     ProgressDialog dialog;
     public static final int CONNECTION_TIMEOUT = 1000*15;
     public static final String SERVER_ADDRESS = "https://shoppingapi.herokuapp.com";
     //public static final String SERVER_ADDRESS = "http://192.168.1.143:3000";
 
-    public ServerRequests(Context context){
+    public UserRequests(Context context){
         dialog = new ProgressDialog(context);
         dialog.setCancelable(false);
         dialog.setTitle("Processing");
@@ -52,11 +52,6 @@ public class ServerRequests {
     public void login(Credentials user, GetUserCallback callback){
         dialog.show();
         new LoginAsync(user, callback ).execute();
-    }
-
-    public void findLists(String uid, ListCallback callback){
-        dialog.show();
-        new FindListsAsync(uid, callback).execute();
     }
 
     public class CreateUserAsync extends AsyncTask<String, Void, String>{
@@ -159,70 +154,4 @@ public class ServerRequests {
         }
     }
 
-    public class FindListsAsync extends AsyncTask<String, Void, List<ShoppingList>>{
-        String uid;
-        ListCallback callback;
-
-        public FindListsAsync(String uid, ListCallback callback) {
-            this.uid = uid;
-            this.callback = callback;
-        }
-
-        @Override
-        protected List<ShoppingList> doInBackground(String... params) {
-            List<ShoppingList> lists = new ArrayList<>();
-            HttpParams httpRequestParams = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
-            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIMEOUT);
-
-            HttpClient client = new DefaultHttpClient(httpRequestParams);
-            HttpGet get = new HttpGet(SERVER_ADDRESS + "/findLists/" + uid);
-
-            try {
-                HttpResponse response = client.execute(get);
-                String str = EntityUtils.toString(response.getEntity());
-
-//                JsonParser parser = new JsonParser();
-//                JsonArray jasonArray = parser.parse(str).getAsJsonArray();
-                JSONArray arr = new JSONArray(str);
-
-                for (int i = 0; i < arr.length(); i++){
-
-                    JSONObject obj = (JSONObject) arr.get(i);
-                    String _id = obj.getString("_id");
-                    String author = obj.getString("author");
-                    String listName = obj.getString("listName");
-                    ShoppingList l = new ShoppingList(_id, author, listName);
-
-                    String subs = obj.getString("subscribers");
-                    JSONArray subArr = new JSONArray(subs);
-                    for (int j = 0; j < subArr.length(); j++){
-                        l.addSubscriber(subArr.get(j).toString());
-                    }
-
-                    String itemString = obj.getString("items");
-                    JSONArray itemArr = new JSONArray(itemString);
-                    for (int k = 0; k < itemArr.length(); k++){
-                        JSONObject ito = itemArr.getJSONObject(k);
-                        String itemName = ito.getString("itemName");
-                        Boolean checked = ito.getBoolean("checked");
-                        l.addItem(itemName, checked);
-                    }
-                   lists.add(l);
-                }
-            } catch (Exception e) {
-                Log.e("LIST()" , e.getMessage());
-                Log.e("LIST()" , e.toString());
-                e.printStackTrace();
-            }
-            return lists;
-        }
-
-        @Override
-        protected void onPostExecute(List<ShoppingList> lists) {
-            dialog.dismiss();
-            callback.done(lists);
-            super.onPostExecute(lists);
-        }
-    }
 }

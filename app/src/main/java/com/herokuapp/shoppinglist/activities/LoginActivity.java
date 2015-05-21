@@ -2,18 +2,18 @@ package com.herokuapp.shoppinglist.activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.herokuapp.shoppinglist.R;
-import com.herokuapp.shoppinglist.database.ServerRequests;
 import com.herokuapp.shoppinglist.interfaces.GetUserCallback;
 import com.herokuapp.shoppinglist.models.Credentials;
 import com.herokuapp.shoppinglist.preferences.Preferences;
+import com.herokuapp.shoppinglist.requests.UserRequests;
 
 public class LoginActivity extends ActionBarActivity implements View.OnClickListener {
     Button btnLogin;
@@ -60,9 +60,9 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     }
 
     private void authenticate(Credentials user) {
-        ServerRequests serverRequest = new ServerRequests(this);
+        UserRequests userRequest = new UserRequests(this);
 
-        serverRequest.login(user, new GetUserCallback(){
+        userRequest.login(user, new GetUserCallback() {
             @Override
             public void done(String uid) {
                 if (uid == null) {

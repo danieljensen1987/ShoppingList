@@ -1,6 +1,6 @@
 package com.herokuapp.shoppinglist.fragments;
 
-import android.content.Context;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -8,15 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.herokuapp.shoppinglist.IO.InputOutput;
 import com.herokuapp.shoppinglist.R;
 import com.herokuapp.shoppinglist.adapters.ShoppingListAdapter;
-import com.herokuapp.shoppinglist.database.ServerRequests;
-import com.herokuapp.shoppinglist.interfaces.ListCallback;
+import com.herokuapp.shoppinglist.requests.ListRequests;
+import com.herokuapp.shoppinglist.interfaces.GetAllMyListsCallback;
 import com.herokuapp.shoppinglist.models.ShoppingList;
-import com.herokuapp.shoppinglist.models.ShoppingListItem;
 import com.herokuapp.shoppinglist.preferences.Preferences;
 
 import java.util.ArrayList;
@@ -24,7 +22,6 @@ import java.util.List;
 
 public class ListsFragment extends ListFragment{
     Preferences sharedPreferences;
-    ArrayList<ShoppingListItem> shoppingListItems = new ArrayList<>();
     List<ShoppingList> shoppingLists = new ArrayList<>();
     ShoppingListAdapter adapter;
     InputOutput io;
@@ -44,9 +41,12 @@ public class ListsFragment extends ListFragment{
         super.onListItemClick(l, v, position, id);
         ListDetailFragment ldf = new ListDetailFragment();
         Bundle args = new Bundle();
-        args.putSerializable("ListItemObj", shoppingListItems.get(position).getShoppingList());
+        args.putSerializable("ListItemObj", shoppingLists.get(position));
         ldf.setArguments(args);
-        getFragmentManager().beginTransaction().replace(R.id.flContent, ldf, "ListDetailFragment").commit();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.flContent, ldf, "ListDetailFragment");
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     private void findShoppingLists(View v) {
@@ -58,12 +58,12 @@ public class ListsFragment extends ListFragment{
         }
         else {
             Log.d("testing", "From server");
-            ServerRequests req = new ServerRequests(v.getContext());
-            req.findLists(sharedPreferences.getUID(), new ListCallback() {
+            ListRequests req = new ListRequests(v.getContext());
+            req.getAllMyLists(sharedPreferences.getUID(), new GetAllMyListsCallback() {
                 @Override
                 public void done(List<ShoppingList> lists) {
-                    io.saveLists(lists);
-                    shoppingLists = io.readLists();
+                    //io.saveLists(lists);
+                    shoppingLists = lists;
                     init();
                 }
             });
@@ -71,10 +71,7 @@ public class ListsFragment extends ListFragment{
     }
 
     private void init() {
-        for(ShoppingList sl : shoppingLists){
-            shoppingListItems.add(new ShoppingListItem(sl, R.drawable.view, R.drawable.delete));
-        }
-        adapter = new ShoppingListAdapter(getActivity(), shoppingListItems);
+        adapter = new ShoppingListAdapter(getActivity(), shoppingLists, R.drawable.view, R.drawable.delete);
         setListAdapter(adapter);
     }
 }
