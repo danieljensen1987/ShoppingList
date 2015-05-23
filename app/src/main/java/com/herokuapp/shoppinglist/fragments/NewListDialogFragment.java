@@ -10,40 +10,36 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 import com.herokuapp.shoppinglist.R;
 
-public class AddItemDialogFragment extends DialogFragment implements OnEditorActionListener{
+public class NewListDialogFragment extends DialogFragment implements TextView.OnEditorActionListener{
     View view;
 
-    public interface AddItemDialogListener{
-        void onFinishAddItemDialog(String input);
+    public interface NewListDialogListener{
+        void onFinishNewListDialog(String input);
     }
 
-    private EditText itemName;
+    private EditText listName;
 
-    public AddItemDialogFragment(){}
+    public NewListDialogFragment(){}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-         view = inflater.inflate(R.layout.fragment_add_item_dialog, container);
-        itemName = (EditText)view.findViewById(R.id.et_itemName);
-        getDialog().setTitle("Add new item");
-
-        itemName.requestFocus();
+        view = inflater.inflate(R.layout.fragment_new_list_dialog, container);
+        listName = (EditText) view.findViewById(R.id.et_listName);
+        getDialog().setTitle("Create new list");
+        listName.requestFocus();
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        itemName.setOnEditorActionListener(this);
+        listName.setOnEditorActionListener(this);
         return view;
     }
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if(EditorInfo.IME_ACTION_DONE == actionId){
-
-
-            AddItemDialogListener callback = (AddItemDialogListener)getTargetFragment();
-            callback.onFinishAddItemDialog(itemName.getText().toString());
+            NewListDialogListener callback = (NewListDialogListener)getTargetFragment();
+            callback.onFinishNewListDialog(listName.getText().toString());
             this.dismiss();
             return true;
         }

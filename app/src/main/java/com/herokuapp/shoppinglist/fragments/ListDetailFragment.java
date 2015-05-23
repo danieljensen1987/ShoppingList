@@ -1,31 +1,34 @@
 package com.herokuapp.shoppinglist.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.herokuapp.shoppinglist.R;
 import com.herokuapp.shoppinglist.adapters.ShoppingListDetailAdapter;
+import com.herokuapp.shoppinglist.fragments.AddItemDialogFragment.AddItemDialogListener;
+import com.herokuapp.shoppinglist.interfaces.DeleteListCallback;
 import com.herokuapp.shoppinglist.interfaces.UpdateListCallback;
 import com.herokuapp.shoppinglist.models.ShoppingList;
 import com.herokuapp.shoppinglist.requests.ListRequests;
-import com.herokuapp.shoppinglist.fragments.AddItemDialogFragment.AddItemDialogListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 
 public class ListDetailFragment extends ListFragment implements AddItemDialogListener{
     ShoppingListDetailAdapter adapter;
-    ShoppingList sl;
+        ShoppingList sl;
 
     public ListDetailFragment() {}
 
@@ -39,7 +42,7 @@ public class ListDetailFragment extends ListFragment implements AddItemDialogLis
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateList(v);
+                updateList();
             }
         });
         addItemButton.setOnClickListener(new View.OnClickListener() {
@@ -65,13 +68,49 @@ public class ListDetailFragment extends ListFragment implements AddItemDialogLis
         adapter.notifyDataSetChanged();
     }
 
-    private void updateList(View v){
-        ListRequests req = new ListRequests(v.getContext());
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                ArrayList dataSet = new ArrayList();
+                dataSet.addAll(sl.items.entrySet());
+                final HashMap.Entry<String, Boolean> item = (HashMap.Entry) dataSet.get(position);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Delete this item from list?");
+                builder.setCancelable(true);
+                builder.setPositiveButton("Delete",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                sl.items.remove(item.getKey());
+                                updateList();
+                                dialog.dismiss();
+                            }
+                        });
+                builder.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+                return true;
+            }
+        });
+    }
+
+    private void updateList(){
+        ListRequests req = new ListRequests(getActivity());
         req.updateList(sl, new UpdateListCallback() {
             @Override
             public void done(ShoppingList list) {
                 Toast.makeText(getActivity(), "DONE", Toast.LENGTH_LONG).show();
-                adapter.notifyDataSetChanged();
+                adapter = null;
+                adapter = new ShoppingListDetailAdapter(getActivity(), sl.items);
+                setListAdapter(adapter);
             }
         });
     }
@@ -86,11 +125,6 @@ public class ListDetailFragment extends ListFragment implements AddItemDialogLis
     @Override
     public void onFinishAddItemDialog(String input) {
         sl.items.put(input, false);
-        Toast.makeText(getActivity(),"Item " + input + " added", Toast.LENGTH_LONG).show();
-        // expensive operation for "updating adapter"
-        // adapter.notifyDataSetChanged() does
-        adapter = null;
-        adapter = new ShoppingListDetailAdapter(getActivity(), sl.items);
-        setListAdapter(adapter);
+        updateList();
     }
 }

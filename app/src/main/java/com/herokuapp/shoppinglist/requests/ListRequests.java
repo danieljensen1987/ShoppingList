@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.herokuapp.shoppinglist.interfaces.CreateListCallback;
+import com.herokuapp.shoppinglist.interfaces.DeleteListCallback;
 import com.herokuapp.shoppinglist.interfaces.GetAllMyListsCallback;
 import com.herokuapp.shoppinglist.interfaces.UpdateListCallback;
 import com.herokuapp.shoppinglist.models.ShoppingList;
@@ -25,13 +27,10 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -52,9 +51,19 @@ public class ListRequests {
         new GetAllMyListsAsync(uid, callback).execute();
     }
 
+    public void createList(ShoppingList list, CreateListCallback callback){
+        dialog.show();
+        new CreateListAsync(list, callback).execute();
+    }
+
     public void updateList(ShoppingList list, UpdateListCallback callback){
         dialog.show();
         new UpdateListAsync(list, callback).execute();
+    }
+
+    public void deleteList(ShoppingList list, DeleteListCallback callback){
+        dialog.show();
+        new DeleteListAsync(list, callback).execute();
     }
 
     public class GetAllMyListsAsync extends AsyncTask<String, Void, List<ShoppingList>>{
@@ -183,6 +192,109 @@ public class ListRequests {
             dialog.dismiss();
             callback.done(shoppingList);
             super.onPostExecute(shoppingList);
+        }
+    }
+
+    public class CreateListAsync extends AsyncTask<String, Void, ShoppingList>{
+        ShoppingList list;
+        CreateListCallback callback;
+
+        public CreateListAsync(ShoppingList list, CreateListCallback callback){
+            this.list = list;
+            this.callback = callback;
+        }
+
+        @Override
+        protected ShoppingList doInBackground(String... params) {
+            ShoppingList returnedList = null;
+
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "/newlist");
+
+            Gson gson = new Gson();
+            String json = gson.toJson(list);
+
+            try {
+                StringEntity se = new StringEntity(json);
+                se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+                post.setEntity(se);
+                HttpResponse response = client.execute(post);
+
+                HttpEntity entity = response.getEntity();
+                String result = EntityUtils.toString(entity);
+
+                if(result.length() != 0){
+                    Type type = new TypeToken<ShoppingList>(){}.getType();
+                    returnedList = new Gson().fromJson(result, type);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return returnedList;
+        }
+
+        @Override
+        protected void onPostExecute(ShoppingList shoppingList) {
+            dialog.dismiss();
+            callback.done(shoppingList);
+            super.onPostExecute(shoppingList);
+        }
+    }
+
+    public class DeleteListAsync extends AsyncTask<String, Void, Boolean>{
+        ShoppingList list;
+        DeleteListCallback callback;
+
+        public DeleteListAsync(ShoppingList list, DeleteListCallback callback){
+            this.list = list;
+            this.callback = callback;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            Boolean isDeleted = false;
+
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIMEOUT);
+
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "/deleteList");
+
+            Gson gson = new Gson();
+            String json = gson.toJson(list);
+
+            try {
+                StringEntity se = new StringEntity(json);
+                se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+                post.setEntity(se);
+                HttpResponse response = client.execute(post);
+
+                HttpEntity entity = response.getEntity();
+                String result = EntityUtils.toString(entity);
+
+                if(result.length() != 0 && result == "true"){
+                    isDeleted = true;
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isDeleted) {
+            dialog.dismiss();
+            callback.done(isDeleted);
+            super.onPostExecute(isDeleted);
         }
     }
 }

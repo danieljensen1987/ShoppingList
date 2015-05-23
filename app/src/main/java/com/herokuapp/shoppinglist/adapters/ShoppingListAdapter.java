@@ -49,32 +49,8 @@ public class ShoppingListAdapter extends BaseAdapter{
             LayoutInflater mInflater = LayoutInflater.from(context);
             convertView = mInflater.inflate(R.layout.shopping_list_item, null);
         }
-
         TextView tvTitle = (TextView)convertView.findViewById(R.id.tvListTitle);
-        ImageButton imView = (ImageButton)convertView.findViewById(R.id.ibView);
-        ImageButton imDelete = (ImageButton)convertView.findViewById(R.id.ibDelete);
-        imView.setFocusable(false);
-        imDelete.setFocusable(false);
-
         tvTitle.setText(shoppingLists.get(position).getListName());
-        imView.setImageResource(mViewIcon);
-        imDelete.setImageResource(mDeleteIcon);
-
-        imView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
-        imDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "what "+position, Toast.LENGTH_LONG).show();
-            }
-        });
-
-
         return convertView;
     }
 }

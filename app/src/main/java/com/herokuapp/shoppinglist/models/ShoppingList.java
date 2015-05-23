@@ -16,6 +16,13 @@ public class ShoppingList implements Serializable{
         return _id;
     }
 
+    public ShoppingList(String author, String listName){
+        this.author = author;
+        this.listName = listName;
+        this.subscribers = new ArrayList<>();
+        this.items = new HashMap<>();
+    }
+
     public ShoppingList(String _id, String author, String listName){
         this._id = _id;
         this.author = author;

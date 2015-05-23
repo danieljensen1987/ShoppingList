@@ -5,35 +5,14 @@
 
     <TextView
         android:id="@+id/tvListTitle"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:gravity="center_vertical"
-        android:paddingRight="40dp"
-        android:layout_toStartOf="@+id/ibView" />
+        android:gravity="center_vertical"/>
 
 
-    <ImageButton
-        android:id="@+id/ibDelete"
-        android:src="@drawable/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:focusable="false"
-        android:clickable="false"/>
-
-    <ImageButton
-        android:id="@+id/ibView"
-        android:src="@drawable/settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/ibDelete"
-        android:focusable="false"
-        android:clickable="false"/>
 
 </RelativeLayout>
