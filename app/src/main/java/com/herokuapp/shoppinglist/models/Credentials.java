@@ -1,15 +1,15 @@
 package com.herokuapp.shoppinglist.models;
 
 public class Credentials {
-    String email, password;
+    String id, password;
 
-    public Credentials(String email, String password){
-        this.email = email;
+    public Credentials(String id, String password){
+        this.id = id;
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getId() {
+        return id;
     }
 
     public String getPassword() {

@@ -75,7 +75,7 @@ public class UserRequests {
 
             JSONObject obj = new JSONObject();
             try {
-                obj.put("email", user.getEmail());
+                obj.put("_id", user.getId());
                 obj.put("password", user.getPassword());
 
                 StringEntity se = new StringEntity(obj.toString());
@@ -126,7 +126,7 @@ public class UserRequests {
 
             JSONObject obj = new JSONObject();
             try {
-                obj.put("email", creds.getEmail());
+                obj.put("_id", creds.getId());
                 obj.put("password", creds.getPassword());
 
                 StringEntity se = new StringEntity(obj.toString());
@@ -139,6 +139,7 @@ public class UserRequests {
                     String result = EntityUtils.toString(entity);
                     JSONObject jsonObject = new JSONObject(result);
                     uid = jsonObject.getString(("_id"));
+                    Log.d("testing", uid);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

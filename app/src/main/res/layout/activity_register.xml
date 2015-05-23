@@ -8,11 +8,11 @@
     tools:context="com.herokuapp.shoppinglist.activities.RegisterActivity">
 
     <EditText
-        android:id="@+id/et_email"
+        android:id="@+id/et_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="Enter email"/>
+        android:hint="Enter Phone Number"/>
 
     <EditText
         android:id="@+id/et_password"

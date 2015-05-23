@@ -6,8 +6,9 @@
     <ListView
         android:id="@id/android:list"
         android:layout_width="match_parent"
-        android:layout_height="525dp"
-        android:descendantFocusability="blocksDescendants">
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"
+        android:layout_marginBottom="60dp">
     </ListView>
 
     <TextView android:id="@id/android:empty"
@@ -17,11 +18,26 @@
         android:textSize="20dp"
         android:textAlignment="center"/>
 
-    <Button
-        android:id="@+id/btn_updateList"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="Update"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/btn_addItem"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:text="Add item" />
+
+        <Button
+            android:id="@+id/btn_updateList"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:text="Update list"/>
+
+    </LinearLayout>
 
 </FrameLayout>

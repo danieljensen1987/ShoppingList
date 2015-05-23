@@ -157,7 +157,6 @@ public class ListRequests {
                 obj.put("items", arr);
                 JSONArray subscribers = new JSONArray(list.subscribers);
                 obj.put("subscribers", subscribers);
-                Log.d("testing", obj.toString());
 
                 StringEntity se = new StringEntity(obj.toString());
                 se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
@@ -166,7 +165,6 @@ public class ListRequests {
 
                 HttpEntity entity = response.getEntity();
                 String result = EntityUtils.toString(entity);
-                Log.d("testing return",result);
 
                 if(result.length() != 0){
                     Type type = new TypeToken<ShoppingList>(){}.getType();

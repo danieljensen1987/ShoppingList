@@ -64,6 +64,7 @@ public class ShoppingListAdapter extends BaseAdapter{
             @Override
             public void onClick(View v) {
 
+
             }
         });
         imDelete.setOnClickListener(new View.OnClickListener() {

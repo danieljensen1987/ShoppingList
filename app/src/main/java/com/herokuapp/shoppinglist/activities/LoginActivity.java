@@ -18,7 +18,7 @@ import com.herokuapp.shoppinglist.requests.UserRequests;
 public class LoginActivity extends ActionBarActivity implements View.OnClickListener {
     Button btnLogin;
     TextView registerLink;
-    EditText etEmail, etPassword;
+    EditText etId, etPassword;
 
     Preferences userLocalStore;
 
@@ -28,7 +28,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         btnLogin = (Button) findViewById(R.id.btn_login);
-        etEmail = (EditText) findViewById(R.id.et_email);
+        etId = (EditText) findViewById(R.id.et_id);
         etPassword = (EditText) findViewById(R.id.et_password);
         registerLink = (TextView) findViewById(R.id.tvRegisterLink);
 
@@ -42,15 +42,10 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-                String email = etEmail.getText().toString();
+                String id = etId.getText().toString();
                 String password = etPassword.getText().toString();
-                //String email = "Frederik.o@mailme.dk";
-                //String password = "Test12345678";
-
-                Credentials user = new Credentials(email, password);
-
+                Credentials user = new Credentials(id, password);
                 authenticate(user);
-
                 break;
             case R.id.tvRegisterLink:
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);

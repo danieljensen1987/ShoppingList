@@ -1,20 +1,14 @@
 package com.herokuapp.shoppinglist.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckedTextView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.herokuapp.shoppinglist.R;
@@ -22,14 +16,14 @@ import com.herokuapp.shoppinglist.adapters.ShoppingListDetailAdapter;
 import com.herokuapp.shoppinglist.interfaces.UpdateListCallback;
 import com.herokuapp.shoppinglist.models.ShoppingList;
 import com.herokuapp.shoppinglist.requests.ListRequests;
+import com.herokuapp.shoppinglist.fragments.AddItemDialogFragment.AddItemDialogListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 
-public class ListDetailFragment extends ListFragment{
+public class ListDetailFragment extends ListFragment implements AddItemDialogListener{
     ShoppingListDetailAdapter adapter;
     ShoppingList sl;
 
@@ -40,20 +34,24 @@ public class ListDetailFragment extends ListFragment{
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list_detail, container, false);
 
-        Button update = (Button)v.findViewById(R.id.btn_updateList);
-        update.setOnClickListener(new View.OnClickListener() {
+        Button updateButton = (Button)v.findViewById(R.id.btn_updateList);
+        Button addItemButton = (Button)v.findViewById(R.id.btn_addItem);
+        updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateList(v);
             }
         });
+        addItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addItem();
+            }
+        });
 
         sl = (ShoppingList)getArguments().getSerializable("ListItemObj");
-        Log.e("testing", "" + sl.items.size());
         adapter = new ShoppingListDetailAdapter(getActivity(), sl.items);
         setListAdapter(adapter);
-        //((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(sl.listName);
-
         return v;
     }
 
@@ -64,26 +62,35 @@ public class ListDetailFragment extends ListFragment{
         dataSet.addAll(sl.items.entrySet());
         HashMap.Entry<String, Boolean> item = (HashMap.Entry)dataSet.get(position);
         sl.checked(item.getKey());
-        adapter = new ShoppingListDetailAdapter(getActivity(), sl.items);
-        setListAdapter(adapter);
         adapter.notifyDataSetChanged();
-        Log.e("testing", item.getKey() + item.getValue());
-
-
-//        Toast.makeText(getActivity(), ""+l.getItemAtPosition(position), Toast.LENGTH_LONG).show();
     }
-
-
 
     private void updateList(View v){
         ListRequests req = new ListRequests(v.getContext());
         req.updateList(sl, new UpdateListCallback() {
             @Override
             public void done(ShoppingList list) {
-                Toast.makeText(getActivity(), "DONE", Toast.LENGTH_LONG);
+                Toast.makeText(getActivity(), "DONE", Toast.LENGTH_LONG).show();
+                adapter.notifyDataSetChanged();
             }
         });
-
     }
 
+    private void addItem(){
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        AddItemDialogFragment addItemFragment = new AddItemDialogFragment();
+        addItemFragment.setTargetFragment(this,0);
+        addItemFragment.show(fm, "Add new");
+    }
+
+    @Override
+    public void onFinishAddItemDialog(String input) {
+        sl.items.put(input, false);
+        Toast.makeText(getActivity(),"Item " + input + " added", Toast.LENGTH_LONG).show();
+        // expensive operation for "updating adapter"
+        // adapter.notifyDataSetChanged() does
+        adapter = null;
+        adapter = new ShoppingListDetailAdapter(getActivity(), sl.items);
+        setListAdapter(adapter);
+    }
 }
