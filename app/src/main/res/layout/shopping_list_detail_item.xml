@@ -12,7 +12,7 @@
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:gravity="center_vertical"
-
+        android:textColor="@color/darker_blue"
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/cbItemChecked" />
 

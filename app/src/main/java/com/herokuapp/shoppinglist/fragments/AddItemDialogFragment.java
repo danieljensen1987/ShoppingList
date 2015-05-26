@@ -29,7 +29,7 @@ public class AddItemDialogFragment extends DialogFragment implements OnEditorAct
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          view = inflater.inflate(R.layout.fragment_add_item_dialog, container);
         itemName = (EditText)view.findViewById(R.id.et_itemName);
-        getDialog().setTitle("Add new item");
+        getDialog().setTitle(R.string.add_item_dialog_title);
 
         itemName.requestFocus();
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);

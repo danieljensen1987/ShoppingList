@@ -28,7 +28,7 @@ import com.herokuapp.shoppinglist.interfaces.DeleteListCallback;
 import com.herokuapp.shoppinglist.interfaces.GetAllMyListsCallback;
 import com.herokuapp.shoppinglist.interfaces.UpdateListCallback;
 import com.herokuapp.shoppinglist.models.ShoppingList;
-import com.herokuapp.shoppinglist.preferences.Preferences;
+import com.herokuapp.shoppinglist.preferences.UserPreferences;
 import com.herokuapp.shoppinglist.requests.ListRequests;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ import java.util.List;
 
 public class ListsFragment extends ListFragment implements NewListDialogListener{
     static final int PICK_CONTACT_REQUEST = 1;
-    Preferences sharedPreferences;
+    UserPreferences sharedUserPreferences;
     List<ShoppingList> shoppingLists = new ArrayList<>();
     ShoppingListAdapter adapter;
     InputOutput io;
@@ -50,7 +50,7 @@ public class ListsFragment extends ListFragment implements NewListDialogListener
         View v = inflater.inflate(R.layout.fragment_lists, container, false);
         Button newListButton = (Button) v.findViewById(R.id.btn_newList);
         Button refreshButton = (Button) v.findViewById(R.id.btn_refreshList);
-        sharedPreferences = new Preferences(v.getContext());
+        sharedUserPreferences = new UserPreferences(v.getContext());
         findShoppingLists(v);
 
         newListButton.setOnClickListener(new View.OnClickListener() {
@@ -78,16 +78,16 @@ public class ListsFragment extends ListFragment implements NewListDialogListener
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 selectedIndex = position;
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("What do you want to do?");
+                builder.setMessage(R.string.lists_dialog_message);
                 builder.setCancelable(true);
-                builder.setPositiveButton("Share list?",
+                builder.setPositiveButton(R.string.lists_dialog_postive_button,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 pickContact();
                                 dialog.dismiss();
                             }
                         });
-                builder.setNegativeButton("Delete list? ",
+                builder.setNegativeButton(R.string.lists_dialog_negative_button,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 deleteList(shoppingLists.get(position));
@@ -124,7 +124,7 @@ public class ListsFragment extends ListFragment implements NewListDialogListener
         } else {
             Log.d("testing", "From server");
             ListRequests req = new ListRequests(v.getContext());
-            req.getAllMyLists(sharedPreferences.getUID(), new GetAllMyListsCallback() {
+            req.getAllMyLists(sharedUserPreferences.getUID(), new GetAllMyListsCallback() {
                 @Override
                 public void done(List<ShoppingList> lists) {
                     //io.saveLists(lists);
@@ -175,7 +175,6 @@ public class ListsFragment extends ListFragment implements NewListDialogListener
                                     null, null);
                             phones.moveToFirst();
                             phoneNumber = phones.getString(phones.getColumnIndex("data1")); // data1 coloumn is the internal coloumn name in android contact database.
-                            Log.d("testing", phoneNumber);
                             updateList(phoneNumber);
                         }
                     }
@@ -189,7 +188,7 @@ public class ListsFragment extends ListFragment implements NewListDialogListener
         req.updateList(shoppingLists.get(selectedIndex), new UpdateListCallback() {
             @Override
             public void done(ShoppingList list) {
-                Toast.makeText(getActivity(), "Done", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.toast_message_done, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -203,7 +202,7 @@ public class ListsFragment extends ListFragment implements NewListDialogListener
 
     @Override
     public void onFinishNewListDialog(String input) {
-        ShoppingList newList = new ShoppingList(sharedPreferences.getUID(), input);
+        ShoppingList newList = new ShoppingList(sharedUserPreferences.getUID(), input);
         ListRequests requests = new ListRequests(getActivity());
         requests.createList(newList, new CreateListCallback() {
             @Override

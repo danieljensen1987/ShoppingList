@@ -8,13 +8,13 @@ import com.herokuapp.shoppinglist.models.ShoppingList;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Preferences {
+public class UserPreferences {
 
     public static final String SP_NAME = "com.herokuapp.shoppingapp.PREFS";
 
     SharedPreferences preferences;
 
-    public Preferences(Context context) {
+    public UserPreferences(Context context) {
         preferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE); // the default mode, where the created file can only be accessed by the calling application (or all applications sharing the same user ID).
     }
 

@@ -3,8 +3,6 @@ package com.herokuapp.shoppinglist.activities;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,15 +10,14 @@ import android.widget.EditText;
 import com.herokuapp.shoppinglist.R;
 import com.herokuapp.shoppinglist.interfaces.GetUserCallback;
 import com.herokuapp.shoppinglist.models.Credentials;
-import com.herokuapp.shoppinglist.preferences.Preferences;
-import com.herokuapp.shoppinglist.requests.ListRequests;
+import com.herokuapp.shoppinglist.preferences.UserPreferences;
 import com.herokuapp.shoppinglist.requests.UserRequests;
 
 public class RegisterActivity extends ActionBarActivity implements View.OnClickListener{
 
     EditText etId, etPassword;
     Button btnRegister;
-    Preferences userLocalStore;
+    UserPreferences userLocalStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +48,7 @@ public class RegisterActivity extends ActionBarActivity implements View.OnClickL
         serverRequest.createUser(user, new GetUserCallback() {
             @Override
             public void done(String returnedUID) {
-                userLocalStore = new Preferences(RegisterActivity.this);
+                userLocalStore = new UserPreferences(RegisterActivity.this);
                 userLocalStore.storeUserID(returnedUID);
                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
             }

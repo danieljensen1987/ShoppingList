@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Indkøbsliste</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
+
+    <string name="toast_message_done">Fuldført</string>
+
+    <string name="login_dialog_message">Forkerte oplysninger</string>
+    <string name="login_dialog_button_positive">OK</string>
+
+    <string name="add_item_dialog_title">Tilføj ny vare</string>
+    <string name="add_item_dialog_tag">Tilføj ny</string>
+
+    <string name="list_detail_dialog_message">Fjern denne vare fra listen?</string>
+    <string name="list_detail_dialog_positive_button">Fjern</string>
+    <string name="list_detail_dialog_negative_button">Fortryd</string>
+
+    <string name="new_list_dialog_title">Opret ny liste</string>
+
+    <string name="lists_dialog_message">Hvad ønsker du at gøre?</string>
+    <string name="lists_dialog_postive_button">Del liste?</string>
+    <string name="lists_dialog_negative_button">Slet liste?</string>
+
+    <string name="navbar_title_home">Hjem</string>
+    <string name="navbar_title_shopping_lists">Indkøbslister</string>
+    <string name="navbar_title_settings">Indstillinger</string>
+
+    <string name="activity_login_phone_number">Telefonnummer</string>
+    <string name="activity_login_password">Kodeord</string>
+    <string name="activity_login_button_login">Login</string>
+    <string name="activity_login_text_register">Ikke registreret? Gør det her</string>
+
+    <string name="activity_register_phone_number">Indtast telefonnummer</string>
+    <string name="activity_register_password">Indtast password</string>
+    <string name="activity_register_repeat_password">Gentag password</string>
+    <string name="activity_register_button_register">Registrer</string>
+
+    <string name="fragment_home_text">Hjem</string>
+    <string name="fragment_settings_text">Indstillinger</string>
+    <string name="fragment_list_detail_button_update_list">Opdater liste</string>
+    <string name="fragment_list_detail_button_add_item">Tilføj vare</string>
+    <string name="fragment_list_detail_empty_text">Ingen vare fundet!</string>
+    <string name="fragment_list_button_new_list">Ny liste</string>
+    <string name="fragment_list_button_refresh">Opdater</string>
+    <string name="fragment_list_empty_text">Ingen lister fundet!</string>
+
+    <string name="spinner_language">Vælg sprog</string>
+    <string name="spinner_button_text">Foretag ændring</string>
+    <string-array name="languages">
+        <item>Engelsk</item>
+        <item>Dansk</item>
+    </string-array>
+
+
+
+</resources>

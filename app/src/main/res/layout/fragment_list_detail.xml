@@ -8,14 +8,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"
-        android:layout_marginBottom="60dp">
+        android:layout_marginBottom="60dp"
+        android:dividerHeight="1dp"
+        android:divider="@color/ocean_blue">
     </ListView>
 
     <TextView android:id="@id/android:empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="No items found!"
-        android:textSize="20dp"
+        android:textColor="@color/darker_blue"
+        android:text="@string/fragment_list_detail_empty_text"
+        android:textSize="20sp"
         android:textAlignment="center"/>
 
     <LinearLayout
@@ -25,18 +28,24 @@
         android:weightSum="1">
 
         <Button
+            android:background="@drawable/button_shape"
+            android:layout_margin="5dp"
+            android:textColor="@color/not_blue"
             android:id="@+id/btn_addItem"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:text="Add item" />
+            android:text="@string/fragment_list_detail_button_add_item" />
 
         <Button
+            android:background="@drawable/button_shape"
+            android:layout_margin="5dp"
+            android:textColor="@color/not_blue"
             android:id="@+id/btn_updateList"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:text="Update list"/>
+            android:text="@string/fragment_list_detail_button_update_list"/>
 
     </LinearLayout>
 

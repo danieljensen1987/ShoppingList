@@ -12,14 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="Enter Phone Number"/>
+        android:hint="@string/activity_register_phone_number"/>
 
     <EditText
         android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="Enter password"
+        android:hint="@string/activity_register_password"
         android:inputType="textPassword"/>
 
     <EditText
@@ -27,14 +27,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="Repeat password"
+        android:hint="@string/activity_register_repeat_password"
         android:inputType="textPassword"/>
 
     <Button
         android:id="@+id/btn_register"
-        android:text="Register"
+        android:text="@string/activity_register_button_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_shape"
+        android:textColor="@color/not_blue"
+        android:layout_margin="5dp"
+        android:layout_below="@+id/language_spinner"
         />
 
 </LinearLayout>

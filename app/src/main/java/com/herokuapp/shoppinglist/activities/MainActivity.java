@@ -14,20 +14,18 @@ import com.herokuapp.shoppinglist.fragments.FragmentNavigationDrawer;
 import com.herokuapp.shoppinglist.fragments.HomeFragment;
 import com.herokuapp.shoppinglist.fragments.ListsFragment;
 import com.herokuapp.shoppinglist.fragments.SettingsFragment;
-import com.herokuapp.shoppinglist.preferences.Preferences;
-
-import java.util.ArrayList;
+import com.herokuapp.shoppinglist.preferences.UserPreferences;
 
 public class MainActivity extends ActionBarActivity{
     private FragmentNavigationDrawer dlDrawer;
-    Preferences userLocalStore;
+    UserPreferences userLocalStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        userLocalStore = new Preferences(this);
+        userLocalStore = new UserPreferences(this);
 
         // Set a Toolbar to replace the ActionBar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -39,9 +37,9 @@ public class MainActivity extends ActionBarActivity{
         dlDrawer.setupDrawerConfiguration((ListView) findViewById(R.id.lvDrawer), toolbar,
                 R.layout.drawer_nav_item, R.id.flContent);
         // Add nav items
-        dlDrawer.addNavItem("Home",R.drawable.home,"Home", HomeFragment.class);
-        dlDrawer.addNavItem("Shopping Lists",R.drawable.list, "Shopping Lists", ListsFragment.class);
-        dlDrawer.addNavItem("Settings",R.drawable.settings, "Settings", SettingsFragment.class);
+        dlDrawer.addNavItem(R.string.navbar_title_home,R.drawable.home,R.string.navbar_title_home, HomeFragment.class);
+        dlDrawer.addNavItem(R.string.navbar_title_shopping_lists,R.drawable.list, R.string.navbar_title_shopping_lists, ListsFragment.class);
+        dlDrawer.addNavItem(R.string.navbar_title_settings,R.drawable.settings, R.string.navbar_title_settings, SettingsFragment.class);
         // Select default "Home"
         if (savedInstanceState == null) {
             dlDrawer.selectDrawerItem(0);

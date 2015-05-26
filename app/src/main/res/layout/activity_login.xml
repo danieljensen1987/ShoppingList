@@ -12,19 +12,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="Phone Number"/>
+        android:hint="@string/activity_login_phone_number"/>
 
     <EditText
         android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:hint="Password"
+        android:hint="@string/activity_login_password"
         android:inputType="textPassword"/>
 
     <Button
+        android:background="@drawable/button_shape"
+        android:layout_margin="5dp"
+        android:textColor="@color/not_blue"
         android:id="@+id/btn_login"
-        android:text="Login"
+        android:text="@string/activity_login_button_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
@@ -34,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Register Here"
+        android:text="@string/activity_login_text_register"
         android:textStyle="bold" />
 
 </LinearLayout>

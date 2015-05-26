@@ -2,12 +2,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/not_blue">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
+
         android:orientation="vertical">
 
         <!-- The ActionBar -->
@@ -21,19 +23,21 @@
             android:id="@+id/flContent"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <!-- The navigation drawer -->
+
     </LinearLayout>
 
-    <!-- The navigation drawer -->
     <ListView
         android:id="@+id/lvDrawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        android:paddingTop="24dp"
-        android:divider="@android:color/darker_gray"
+        android:layout_marginTop="56dp"
+        android:divider="@color/darker_blue"
         android:dividerHeight="1dp"
-        android:background="@android:color/background_light" />
+        android:background="@color/not_blue" />
 
 
 </com.herokuapp.shoppinglist.fragments.FragmentNavigationDrawer>

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.herokuapp.shoppinglist.R;
 import com.herokuapp.shoppinglist.interfaces.GetUserCallback;
 import com.herokuapp.shoppinglist.models.Credentials;
-import com.herokuapp.shoppinglist.preferences.Preferences;
+import com.herokuapp.shoppinglist.preferences.UserPreferences;
 import com.herokuapp.shoppinglist.requests.UserRequests;
 
 public class LoginActivity extends ActionBarActivity implements View.OnClickListener {
@@ -20,7 +20,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     TextView registerLink;
     EditText etId, etPassword;
 
-    Preferences userLocalStore;
+    UserPreferences userLocalStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         btnLogin.setOnClickListener(this);
         registerLink.setOnClickListener(this);
 
-        userLocalStore = new Preferences(this);
+        userLocalStore = new UserPreferences(this);
     }
 
     @Override
@@ -71,8 +71,8 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
     private void showErrorMessage() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(LoginActivity.this);
-        dialogBuilder.setMessage("Incorrect credentials");
-        dialogBuilder.setPositiveButton("Ok", null);
+        dialogBuilder.setMessage(R.string.login_dialog_message);
+        dialogBuilder.setPositiveButton(R.string.login_dialog_button_positive, null);
         dialogBuilder.show();
     }
 

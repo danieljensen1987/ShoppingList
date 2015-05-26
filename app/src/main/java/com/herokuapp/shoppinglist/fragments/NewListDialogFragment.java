@@ -28,7 +28,7 @@ public class NewListDialogFragment extends DialogFragment implements TextView.On
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_new_list_dialog, container);
         listName = (EditText) view.findViewById(R.id.et_listName);
-        getDialog().setTitle("Create new list");
+        getDialog().setTitle(R.string.new_list_dialog_title);
         listName.requestFocus();
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         listName.setOnEditorActionListener(this);

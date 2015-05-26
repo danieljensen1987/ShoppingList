@@ -78,9 +78,9 @@ public class ListDetailFragment extends ListFragment implements AddItemDialogLis
                 dataSet.addAll(sl.items.entrySet());
                 final HashMap.Entry<String, Boolean> item = (HashMap.Entry) dataSet.get(position);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("Delete this item from list?");
+                builder.setMessage(R.string.list_detail_dialog_message);
                 builder.setCancelable(true);
-                builder.setPositiveButton("Delete",
+                builder.setPositiveButton(R.string.list_detail_dialog_positive_button,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 sl.items.remove(item.getKey());
@@ -88,7 +88,7 @@ public class ListDetailFragment extends ListFragment implements AddItemDialogLis
                                 dialog.dismiss();
                             }
                         });
-                builder.setNegativeButton("Cancel",
+                builder.setNegativeButton(R.string.list_detail_dialog_negative_button,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
@@ -107,7 +107,7 @@ public class ListDetailFragment extends ListFragment implements AddItemDialogLis
         req.updateList(sl, new UpdateListCallback() {
             @Override
             public void done(ShoppingList list) {
-                Toast.makeText(getActivity(), "DONE", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.toast_message_done, Toast.LENGTH_LONG).show();
                 adapter = null;
                 adapter = new ShoppingListDetailAdapter(getActivity(), sl.items);
                 setListAdapter(adapter);
@@ -118,7 +118,7 @@ public class ListDetailFragment extends ListFragment implements AddItemDialogLis
     private void addItem(){
         FragmentManager fm = getActivity().getSupportFragmentManager();
         AddItemDialogFragment addItemFragment = new AddItemDialogFragment();
-        addItemFragment.setTargetFragment(this,0);
+        addItemFragment.setTargetFragment(this, 0);
         addItemFragment.show(fm, "Add new");
     }
 

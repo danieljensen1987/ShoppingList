@@ -1,17 +1,17 @@
 package com.herokuapp.shoppinglist.models;
 
 public class NavDrawerItem {
-    private String mTitle;
+    private int mTitle;
     private int mIcon;
 
     public NavDrawerItem(){}
 
-    public NavDrawerItem(String title, int icon){
+    public NavDrawerItem(int title, int icon){
         this.mTitle = title;
         this.mIcon = icon;
     }
 
-    public String getTitle(){
+    public int getTitle(){
         return this.mTitle;
     }
 
@@ -19,7 +19,7 @@ public class NavDrawerItem {
         return this.mIcon;
     }
 
-    public void setTitle(String title){
+    public void setTitle(int title){
         this.mTitle = title;
     }
 

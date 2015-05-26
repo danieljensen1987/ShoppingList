@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="marine_blue" type="color">#364573</item>
+    <item name="darker_blue" type="color">#497AA6</item>
+    <item name="ocean_blue" type="color">#60A4BF</item>
+    <item name="neon_blue" type="color">#73C6D9</item>
+    <item name="not_blue" type="color">#FFFFFF</item>
+
+    <integer-array name="ocean_colors">
+        <item>@color/marine_blue</item>
+        <item>@color/darker_blue</item>
+        <item>@color/ocean_blue</item>
+        <item>@color/neon_blue</item>
+        <item>@color/not_blue</item>
+
+    </integer-array>
+</resources>

@@ -64,7 +64,7 @@ public class FragmentNavigationDrawer extends DrawerLayout {
     }
 
     // addNavItem("First", R.mipmap.ic_one, "First Fragment", FirstFragment.class)
-    public void addNavItem(String navTitle, int icon, String windowTitle, Class<? extends Fragment> fragmentClass) {
+    public void addNavItem(int navTitle, int icon, int windowTitle, Class<? extends Fragment> fragmentClass) {
         // adding nav drawer items to array
         navDrawerItems.add(new NavDrawerItem(navTitle, icon));
         // Set the adapter for the list view
@@ -115,7 +115,7 @@ public class FragmentNavigationDrawer extends DrawerLayout {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
 
-    private void setTitle(CharSequence title) {
+    private void setTitle(int title) {
         getSupportActionBar().setTitle(title);
     }
 
@@ -128,14 +128,14 @@ public class FragmentNavigationDrawer extends DrawerLayout {
 
     private class FragmentNavItem {
         private Class<? extends Fragment> fragmentClass;
-        private String title;
+        private int title;
         private Bundle fragmentArgs;
 
-        public FragmentNavItem(String title, Class<? extends Fragment> fragmentClass) {
+        public FragmentNavItem(int title, Class<? extends Fragment> fragmentClass) {
             this(title, fragmentClass, null);
         }
 
-        public FragmentNavItem(String title, Class<? extends Fragment> fragmentClass, Bundle args) {
+        public FragmentNavItem(int title, Class<? extends Fragment> fragmentClass, Bundle args) {
             this.fragmentClass = fragmentClass;
             this.fragmentArgs = args;
             this.title = title;
@@ -145,7 +145,7 @@ public class FragmentNavigationDrawer extends DrawerLayout {
             return fragmentClass;
         }
 
-        public String getTitle() {
+        public int getTitle() {
             return title;
         }
 
